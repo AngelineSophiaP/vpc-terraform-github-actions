@@ -28,6 +28,9 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-2
 
+      - name: List terraform-vpc contents
+        run: ls -la terraform-vpc
+
       # Step 4: Terraform Init (run in your terraform-vpc folder)
       - name: Terraform Init
         run: terraform init
