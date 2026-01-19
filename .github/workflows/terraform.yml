@@ -10,14 +10,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout your repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # Step 2: Setup Terraform
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.6.0
 
+      # Step 3: Configure AWS credentials (region matches your resources)
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -25,10 +28,12 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-2
 
+      # Step 4: Terraform Init (run in your terraform-vpc folder)
       - name: Terraform Init
         run: terraform init
-        working-directory: terraform-vpc # 🔥 THIS LINE FIXES EVERYTHING
+        working-directory: terraform-vpc
 
+      # Step 5: Terraform Apply (run in your terraform-vpc folder)
       - name: Terraform Apply
         run: terraform apply -auto-approve
-        working-directory: terraform-vpc # 🔥 THIS LINE FIXES EVERYTHING
+        working-directory: terraform-vpc
